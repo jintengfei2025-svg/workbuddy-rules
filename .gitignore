@@ -1,0 +1,28 @@
+# 临时脚本与打包产物
+_*.py
+*.zip
+_build/
+
+# 输出目录
+outputs/
+output/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# 系统
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 编辑器 / IDE
+.vscode/
+.idea/
+
+# 本地私有覆盖（别把自己的那份提交上来）
+*.local.md
+private/

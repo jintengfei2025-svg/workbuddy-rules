@@ -56,14 +56,32 @@
 
 ## 安装
 
+先看清你用哪个客户端 —— 每个客户端其实有**两个入口**，作用完全不一样：
+
+| 客户端 | 技能目录（按需加载） | 常驻文件（每轮自动读，推荐） |
+|---|---|---|
+| **Codex** | `.agents/skills/wbs-rules/` | **`AGENTS.md`** ← 本仓库自带，克隆下来就生效 |
+| Claude Code | `~/.claude/skills/` | `CLAUDE.md` |
+| Cursor | — | `.cursorrules` |
+| CodeBuddy / WorkBuddy | `~/.codebuddy/skills/`、`~/.workbuddy/skills/` | `MEMORY.md` |
+
+> ⚠️ **技能只在被调用时才加载进上下文，常驻文件是每一轮都注入的。**
+> 想让规则真正「每轮生效」，一定要落到右边那一栏。只配技能，规则大概率还是会被忘掉。
+
 ### 方式 1：放进技能目录
 
 ```bash
-git clone https://github.com/<your-name>/workbuddy-rules.git ~/.claude/skills/workbuddy-rules
+# Claude Code
+git clone https://github.com/<your-name>/workbuddy-rules.git ~/.claude/skills/wbs-rules
+
+# Codex（仓库级，团队共用）
+git clone https://github.com/<your-name>/workbuddy-rules.git .agents/skills/wbs-rules
 ```
 
-把路径换成你客户端的技能目录（`~/.codebuddy/skills/`、`~/.workbuddy/skills/` 等）。
-新装的技能一般要**新开一个会话**才会被识别。
+把路径换成你客户端的技能目录。新装的技能一般要**新开一个会话**才会被识别。
+
+**Codex 用户**：本仓库自带 `AGENTS.md`，克隆下来 Codex 就会自动读 —— 这是最省事的一条路。
+想让它在所有项目生效，把 `AGENTS.md` 拷到 `~/.codex/AGENTS.md`。
 
 ### 方式 2：接进常驻上下文（推荐）
 
@@ -107,6 +125,7 @@ MEMORY.md   AGENTS.md   CLAUDE.md   客户端的「自定义指令」输入框
 ```
 workbuddy-rules/
 ├── SKILL.md                        规则本体（4 铁律 + 4 组纪律 + 豁免流程）
+├── AGENTS.md                       给 Codex 的常驻指令（每轮自动读，克隆即用）
 ├── references/
 │   └── handover-template.md        交接文档模板
 ├── README.md
